@@ -1,2 +1,17 @@
 ---
 # tasks file for config-creation
+    - name: "Create some configurations"
+      command: /tmp/openvpn-install.sh
+      environment:
+        MENU_OPTION: "1"
+        CLIENT: '{{ item }}'
+        PASS: "1"
+      become: true
+      loop: '{{ username_list }}'
+    - name: "Copy config files to file browser directory"
+      copy:
+        src: '{{ ansible_env.HOME }}/'
+        dest: /opt/www/files
+        remote_src: yes
+      become: true
+...

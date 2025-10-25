@@ -1,2 +1,7 @@
 ---
 # vars file for config-creation
+    username_list:
+      - ruben
+      - david
+      - nazar
+...
