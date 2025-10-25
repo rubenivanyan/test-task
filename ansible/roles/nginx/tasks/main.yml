@@ -1,2 +1,15 @@
 ---
 # tasks file for nginx
+    - name: "Install Nginx"
+      docker_container:
+        name: nginx
+        image: nginx
+        detach: true
+        ports:
+          - 80:80
+        volumes:
+          - /tmp/conf:/etc/nginx/conf.d
+          - /opt/www/file-browser:/opt/www/file-browser
+          - /opt/www/files:/opt/www/files
+        restart_policy: always
+      become: true
