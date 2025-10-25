@@ -1,2 +1,23 @@
 ---
 # tasks file for openvpn
+    - name: "Get installation script"
+      uri:
+        url: https://raw.githubusercontent.com/angristan/openvpn-install/master/openvpn-install.sh
+        method: GET
+        dest: /tmp/
+        mode: '774'
+        remote_src: true
+    - name: "Install openvpn"
+      command: /tmp/openvpn-install.sh
+      environment:
+        AUTO_INSTALL: "y"
+        PORT_CHOICE: "2"
+        PORT: "1195"
+      become: true
+    - name: "Check openvpn service"
+      systemd: 
+        name: "openvpn"
+        state: started
+        enabled: true
+      become: true
+...
