@@ -1,2 +1,12 @@
 ---
 # vars file for file-browser
+    directory_list:
+      - css
+      - image
+      - js
+    file_list:
+      - index.html
+      - default.conf
+    new_directory_list: 
+      - /opt/www/
+      - /tmp/conf/

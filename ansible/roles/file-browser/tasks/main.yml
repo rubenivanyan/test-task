@@ -1,2 +1,44 @@
 ---
 # tasks file for file-browser
+    - name: "Install unzip"
+      apt:
+        name: unzip
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 4000
+        state: present
+      become: true
+    - name: "Extract master.zip"
+      unarchive:
+        src: https://github.com/mohamnag/nginx-file-browser/archive/refs/heads/master.zip
+        dest: /tmp
+        remote_src: yes
+    - name: "Create a new directory"
+      file:
+        path: '{{ item }}'
+        state: directory
+        owner: '{{ ansible_user }}'
+        group: '{{ ansible_user }}'
+        mode: '0755'
+      become: true
+      loop: '{{ new_directory_list }}'
+    - name: "Copy file browser directories"
+      copy:
+        src: /tmp/nginx-file-browser-master/{{ item }}
+        dest: /opt/www/file-browser
+        remote_src: yes
+      become: true
+      loop: '{{ directory_list }}'
+    - name: "Copy index.html"
+      copy:
+        src: /tmp/nginx-file-browser-master/index.html
+        dest: /opt/www/file-browser/index.html
+        remote_src: yes
+      become: true
+    - name: "Copy file browser's nginx config file"
+      copy:
+        src: /tmp/nginx-file-browser-master/default.conf
+        dest: /tmp/conf/default.conf
+        remote_src: yes
+      become: true
+...
