@@ -1,0 +1,12 @@
+---
+# tasks file for docker
+    - name: "Install plugins"
+      dnf: 
+        name: dnf-plugins-core
+        state: present
+      become: true
+    - name: "Add repo"
+      shell:
+        "{{ value }} config-manager --add-repo https://download.docker.com/linux/{{ distribution }}/docker-ce.repo"
+      become: true
+...

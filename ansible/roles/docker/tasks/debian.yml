@@ -1,0 +1,37 @@
+---
+# tasks file for docker
+    - name: "Install ca-certificates"
+      apt:
+        name: "ca-certificates"
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 4000
+        state: present
+      become: true
+    - name: "Install keyrings"
+      file: 
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+      become: true
+    - name: "Get gpg"
+      get_url:
+        url: https://download.docker.com/linux/{{ distribution }}/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: '0644'
+      become: true
+    - name: "Add the repository to Apt sources"
+      shell:
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo \"${VERSION_CODENAME}\") stable" \
+        | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      when: ansible_distribution == "Debian"
+    - name: "Add the repository to Apt sources"
+      shell:
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo \"${UBUNTU_CODENAME:-$VERSION_CODENAME}\") stable" \
+        | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      when: ansible_distribution == "Ubuntu"
+    - name: "Apt update"
+      apt:
+        update_cache: yes
+      become: true
+...
