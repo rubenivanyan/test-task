@@ -16,7 +16,7 @@
       become: true
     - name: "Check openvpn service"
       systemd: 
-        name: "openvpn"
+        name: '{{ openvpn }}'
         state: started
         enabled: true
       become: true

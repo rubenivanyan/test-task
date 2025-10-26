@@ -1,2 +1,3 @@
 ---
 # vars file for openvpn
+    openvpn: "{{ 'openvpn' if ansible_os_family == 'Debian' else 'openvpn-server@server.service' if ansible_os_family == 'RedHat' }}"
