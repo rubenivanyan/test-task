@@ -6,4 +6,6 @@
       - containerd.io
       - docker-buildx-plugin
       - docker-compose-plugin
+    distribution: "{{ 'ubuntu' if ansible_distribution == 'Ubuntu' else 'debian' if ansible_distribution == 'Debian' else 'fedora' if ansible_distribution == 'Fedora' else 'centos' if ansible_distribution == 'CentOS'}}"
+    value: "{{ 'dnf-3' if ansible_distribution == 'Fedora' else 'dnf' if ansible_distribution == 'CentOS'}}"
 ...
