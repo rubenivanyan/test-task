@@ -1,11 +1,8 @@
 ---
 # tasks file for file-browser
     - name: "Install unzip"
-      apt:
+      package:
         name: unzip
-        update_cache: true
-        force_apt_get: true
-        cache_valid_time: 4000
         state: present
       become: true
     - name: "Extract master.zip"
