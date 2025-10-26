@@ -1,0 +1,13 @@
+---
+  - hosts: '{{ target }}'
+    roles:
+      - role: 'docker'
+        description: 'Install docker on the host'
+      - role: 'file-browser'
+        description: 'Download and configure file browser'
+      - role: 'nginx'
+        description: 'Install nginx'
+      - role: 'openvpn'
+        description: 'Install and configure openvpn'
+      - role: 'config-creation'
+        description: 'OpenVPN configuration creation'
