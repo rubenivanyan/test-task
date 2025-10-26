@@ -8,10 +8,16 @@
         PASS: "1"
       become: true
       loop: '{{ username_list }}'
+    - name: "Find all .ovpn files"
+      find:
+        paths: '{{ ansible_env.HOME }}'
+        patterns: "*ovpn"
+      register:  openvpn_config
     - name: "Copy config files to file browser directory"
       copy:
-        src: '{{ ansible_env.HOME }}/'
-        dest: /opt/www/files
+        src: '{{ item.path }}'
+        dest: /opt/www/files/
         remote_src: yes
       become: true
+      loop: '{{ openvpn_config.files }}'
 ...
