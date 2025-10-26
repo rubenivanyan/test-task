@@ -7,7 +7,7 @@ This project provides an **Ansible-based automation** for deploying **OpenVPN** 
 ## 📦 Features
 
 - Installs and configures **OpenVPN** on the target host.
-- Exposes **port 1995** for accessing a web page that lists available VPN configuration files.
+- Exposes **port 1195** for accessing a web page that lists available VPN configuration files.
 - Automatically places generated `.ovpn` configs in a visible web directory.
 - Supports **multiple environments**:
   - Localhost  
